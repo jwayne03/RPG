@@ -56,8 +56,9 @@ public class Player {
         player.setLevel(player.getLevel() + 1);
     }
 
-    public void protect() { // TODO
-
+    public void protect(Player player, Player enemy) {
+        System.out.println(player.getName() + " recieves 0! Remaining: " + player.getStamina());
+        System.out.println(enemy.getName() + " recieves 0! Remaining: " + enemy.getStamina());
     }
 
     public void weaponSkill() { // TODO

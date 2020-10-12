@@ -56,7 +56,7 @@ public class Manager {
                         player.attack(player);
                         break;
                     case 2:
-                        player.protect();
+                        player.protect(player, enemy);
                         break;
                     case 3:
                         player.weaponSkill();
