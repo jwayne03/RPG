@@ -1,5 +1,10 @@
 package model;
 
+import utils.Printer;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Random;
 
 public class Player {
@@ -10,7 +15,9 @@ public class Player {
     protected int magic;
     protected String weapon;
     protected boolean isDead;
-    private final Random random = new Random();
+
+    private Random random = new Random();
+    private BufferedReader read;
 
     public Player(String name, int level, int stamina, int magic, String weapon, boolean dead) {
         this.name = name;
@@ -48,29 +55,6 @@ public class Player {
                 " Magic: " + magic +
                 " Weapon: " + weapon +
                 " Dead: " + isDead;
-    }
-
-    public void attack(Player player) {
-        // TODO: Borrar el sout del numero generado aleatoriamente
-        System.out.println(generateRandomNumberAttack());
-        player.setLevel(player.getLevel() + 1);
-    }
-
-    public void protect(Player player, Player enemy) {
-        System.out.println(player.getName() + " recieves 0! Remaining: " + player.getStamina());
-        System.out.println(enemy.getName() + " recieves 0! Remaining: " + enemy.getStamina());
-    }
-
-    public void weaponSkill() { // TODO
-
-    }
-
-    public void classSkill() { // TODO
-
-    }
-
-    public void escape() { // TODO
-
     }
 
     public String getName() {
@@ -121,11 +105,69 @@ public class Player {
         this.isDead = dead;
     }
 
+    private void init() {
+        read = new BufferedReader(new InputStreamReader(System.in));
+    }
+
+    public void attack(Player player, Player enemy) {
+        // TODO: Borrar el sout del numero generado aleatoriamente
+        int playerDamage = generateRandomNumberAttack();
+        int enemyDamage = generateRandomNumberAttack();
+        playerDamage += player.getLevel();
+        enemyDamage += enemy.getLevel();
+        player.setStamina(player.getStamina() - enemyDamage);
+        enemy.setStamina(enemy.getStamina() - playerDamage);
+        System.out.println("----------DAMAGE----------");
+        System.out.println(player.getName() + " recieves " + enemyDamage + "! Life remaining: " + player.getStamina());
+        System.out.println(enemy.getName() + " recieves " + playerDamage + "! Life remaining: " + enemy.getStamina());
+    }
+
+    public void protect(Player player, Player enemy) {
+        System.out.println(player.getName() + " recieves 0! Remaining: " + player.getStamina());
+        System.out.println(enemy.getName() + " recieves 0! Remaining: " + enemy.getStamina());
+    }
+
+    public void weaponSkill(Player player, Player enemy) { // TODO
+        // hay que meter el daño recibido y el restante
+        System.out.println(player.getName() + " recieves ");
+        System.out.println(enemy.getName() + " recieves ");
+    }
+
+    public void classSkill() { // TODO
+
+    }
+
+    public void escape(Player player) { // TODO
+        try {
+            Printer.printEscapeOptions();
+            int option = Integer.parseInt(read.readLine());
+            switch (option) {
+                case 1:
+                    // nuevo personaje
+                    break;
+                case 2:
+                    System.out.println(player.toString());
+                    break;
+                case 3:
+                    // rendirse
+                    break;
+                default:
+                    System.out.println("You need to choose a number");
+                    break;
+            }
+
+        } catch (IOException | NumberFormatException e) {
+            e.printStackTrace();
+        }
+    }
+
     private int generateRandomNumber() {
-        return random.nextInt(10) + 1;
+        int randomNumber = random.nextInt(10) + 1;
+        return randomNumber;
     }
 
     private int generateRandomNumberAttack() {
-        return random.nextInt(6) + 1;
+        int randomNumberAttack = random.nextInt(6) + 1;
+        return randomNumberAttack;
     }
 }

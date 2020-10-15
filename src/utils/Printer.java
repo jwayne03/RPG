@@ -14,4 +14,12 @@ public class Printer {
         System.out.println("5) Escape");
         System.out.println("------------------");
     }
+
+    public static void printEscapeOptions() {
+        System.out.println("-----ESCAPED-----");
+        System.out.println("--GAME IS ENDED--");
+        System.out.println("1) New Enemy");
+        System.out.println("2) See player");
+        System.out.println("3) Surrender");
+    }
 }

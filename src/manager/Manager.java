@@ -49,23 +49,23 @@ public class Manager {
                 int option;
                 do {
                     option = Integer.parseInt(read.readLine());
-                } while (option < 0 && option > 5);
+                } while (option < 1 && option > 5);
 
                 switch (option) {
                     case 1:
-                        player.attack(player);
+                        player.attack(player, enemy);
                         break;
                     case 2:
                         player.protect(player, enemy);
                         break;
                     case 3:
-                        player.weaponSkill();
+                        player.weaponSkill(player, enemy);
                         break;
                     case 4:
                         player.classSkill();
                         break;
                     case 5:
-                        player.escape();
+                        player.escape(player);
                         break;
                     default:
                         System.out.println("You need to choose a number");
