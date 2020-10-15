@@ -65,7 +65,7 @@ public class Manager {
                         player.classSkill();
                         break;
                     case 5:
-                        player.escape(player);
+                        player.escape(player, enemy);
                         break;
                     default:
                         System.out.println("You need to choose a number");
@@ -74,7 +74,6 @@ public class Manager {
             }
         } catch (IOException | NumberFormatException e) {
             System.err.println("You need to put a number");
-            e.printStackTrace();
         }
     }
 }

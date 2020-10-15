@@ -113,13 +113,25 @@ public class Player {
         // TODO: Borrar el sout del numero generado aleatoriamente
         int playerDamage = generateRandomNumberAttack();
         int enemyDamage = generateRandomNumberAttack();
+
         playerDamage += player.getLevel();
         enemyDamage += enemy.getLevel();
+
         player.setStamina(player.getStamina() - enemyDamage);
         enemy.setStamina(enemy.getStamina() - playerDamage);
+
+        if (player.getStamina() <= 0) {
+            player.setStamina(0);
+            player.setDead(true);
+        } else {
+            player.setLevel(player.getLevel() + 1);
+        }
+
         System.out.println("----------DAMAGE----------");
-        System.out.println(player.getName() + " recieves " + enemyDamage + "! Life remaining: " + player.getStamina());
-        System.out.println(enemy.getName() + " recieves " + playerDamage + "! Life remaining: " + enemy.getStamina());
+        System.out.println(player.getName() + " recieves " + enemyDamage
+                + "! Life remaining: " + player.getStamina());
+        System.out.println(enemy.getName() + " recieves " + playerDamage
+                + "! Life remaining: " + enemy.getStamina());
     }
 
     public void protect(Player player, Player enemy) {
@@ -137,25 +149,29 @@ public class Player {
 
     }
 
-    public void escape(Player player) { // TODO
+    public void escape(Player player,Player enemy) { // TODO
         try {
-            Printer.printEscapeOptions();
-            int option = Integer.parseInt(read.readLine());
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+            int option;
+            do {
+                Printer.printEscapeOptions();
+                option = Integer.parseInt(br.readLine());
+            } while (option < 1 && option > 3);
             switch (option) {
                 case 1:
-                    // nuevo personaje
+                    enemy = new Player();
                     break;
                 case 2:
                     System.out.println(player.toString());
                     break;
                 case 3:
-                    // rendirse
+                    System.out.println("surrender");
                     break;
                 default:
                     System.out.println("You need to choose a number");
                     break;
             }
-
         } catch (IOException | NumberFormatException e) {
             e.printStackTrace();
         }
