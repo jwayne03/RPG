@@ -1,6 +1,7 @@
 package manager;
 
 import model.Player;
+import model.Priest;
 import model.Weapon;
 import utils.Printer;
 
@@ -69,7 +70,7 @@ public class Manager {
                         player.classSkill(player, enemy);
                         break;
                     case 5:
-                        player.escape(player);
+                        player.escape(player, enemy);
                         break;
                     default:
                         System.out.println("You need to choose a number");

@@ -45,4 +45,15 @@ public class Printer {
         System.out.println("2) Warrior");
         System.out.println("3) Hunter");
     }
+
+    public static void printWeaponDamage(boolean isActivated) {
+        if (isActivated) {
+            System.out.println("----WEAPON ACTIVATED----");
+            System.out.println("------------------------");
+        } else {
+            System.out.println("----WEAPON ACTIVATED----");
+            System.out.println("--------MAGIC: -1-------");
+            System.out.println("-----WEAPON FAILED------");
+        }
+    }
 }
