@@ -4,7 +4,7 @@ public class Weapon {
 
     private String weaponName;
 
-    public Weapon(String weaponName, int damage) {
+    public Weapon(String weaponName) {
         this.weaponName = weaponName;
     }
 

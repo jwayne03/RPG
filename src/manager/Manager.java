@@ -1,6 +1,7 @@
 package manager;
 
 import model.Player;
+import model.Weapon;
 import utils.Printer;
 
 import java.io.BufferedReader;
@@ -25,7 +26,7 @@ public class Manager {
             System.out.print("Name of your weapon:");
             String weapon = read.readLine();
 
-            player = new Player(name, weapon);
+            player = new Player(name, new Weapon(weapon));
 
             newGame();
         } catch (IOException | NumberFormatException e) {

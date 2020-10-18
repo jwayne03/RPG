@@ -47,6 +47,7 @@ public class Player {
         this.isDead = false;
     }
 
+
     private void init() {
         read = new BufferedReader(new InputStreamReader(System.in));
     }
@@ -140,7 +141,7 @@ public class Player {
                     System.exit(0);
                     break;
                 case 4:
-                    if (player.getLevel() >= 5) skill();
+                    if (player.getLevel() >= 5) skill(player);
                     break;
                 default:
                     System.out.println("You need to choose a number");
@@ -151,7 +152,7 @@ public class Player {
         }
     }
 
-    private void skill() {
+    private void skill(Player player) {
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
