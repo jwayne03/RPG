@@ -1,6 +1,6 @@
 package utils;
 
-import javax.swing.*;
+import model.Player;
 
 public class Printer {
 
@@ -21,5 +21,14 @@ public class Printer {
         System.out.println("1) New Enemy");
         System.out.println("2) See player");
         System.out.println("3) Surrender");
+    }
+
+    public static void printSurrender(Player player) {
+        System.out.println("Thank you for participating!");
+        System.out.println("----------------------------");
+        System.out.println("-----------PLAYER-----------");
+        System.out.println(player.toString());
+        System.out.println("----------------------------");
+        System.out.println("----------------------------");
     }
 }

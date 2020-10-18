@@ -1,5 +1,6 @@
 package model;
 
+import manager.Manager;
 import utils.Printer;
 
 import java.io.BufferedReader;
@@ -110,7 +111,6 @@ public class Player {
     }
 
     public void attack(Player player, Player enemy) {
-        // TODO: Borrar el sout del numero generado aleatoriamente
         int playerDamage = generateRandomNumberAttack();
         int enemyDamage = generateRandomNumberAttack();
 
@@ -125,6 +125,11 @@ public class Player {
             player.setDead(true);
         } else {
             player.setLevel(player.getLevel() + 1);
+        }
+
+        if (enemy.getStamina() <= 0) {
+            enemy.setStamina(0);
+            enemy.setDead(true);
         }
 
         System.out.println("----------DAMAGE----------");
@@ -149,7 +154,7 @@ public class Player {
 
     }
 
-    public void escape(Player player,Player enemy) { // TODO
+    public void escape(Player player) { // TODO
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
@@ -160,13 +165,13 @@ public class Player {
             } while (option < 1 && option > 3);
             switch (option) {
                 case 1:
-                    enemy = new Player();
+                    Manager.newGame();
                     break;
                 case 2:
                     System.out.println(player.toString());
                     break;
                 case 3:
-                    System.out.println("surrender");
+                    Printer.printSurrender(player);
                     break;
                 default:
                     System.out.println("You need to choose a number");

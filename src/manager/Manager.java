@@ -9,9 +9,9 @@ import java.io.InputStreamReader;
 
 public class Manager {
 
-    private Player player;
-    private Player enemy;
-    private BufferedReader read;
+    private static Player player;
+    private static Player enemy;
+    private static BufferedReader read;
 
     public void init() {
         read = new BufferedReader(new InputStreamReader(System.in));
@@ -26,21 +26,24 @@ public class Manager {
             String weapon = read.readLine();
 
             player = new Player(name, weapon);
-            enemy = new Player();
 
-            System.out.println(player.toString());
-            System.out.println(enemy.toString());
-            System.out.println("----PLAYER----");
-            System.out.println(player.getName() + " of level " + player.getLevel());
-            System.out.println("----ENEMY----");
-            System.out.println(enemy.getName() + " of level " + enemy.getLevel());
-            menu();
+            newGame();
         } catch (IOException | NumberFormatException e) {
             e.printStackTrace();
         }
     }
 
-    private void menu() {
+    public static void newGame() {
+        enemy = new Player();
+        System.out.println("----PLAYER----");
+        System.out.println(player.getName() + " of level " + player.getLevel());
+        System.out.println("----ENEMY----");
+        System.out.println(enemy.getName() + " of level " + enemy.getLevel());
+        menu();
+
+    }
+
+    public static void menu() {
         try {
             boolean exit = false;
             while (!exit) {
@@ -65,7 +68,7 @@ public class Manager {
                         player.classSkill();
                         break;
                     case 5:
-                        player.escape(player, enemy);
+                        player.escape(player);
                         break;
                     default:
                         System.out.println("You need to choose a number");
