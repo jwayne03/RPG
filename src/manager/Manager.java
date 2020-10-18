@@ -65,7 +65,7 @@ public class Manager {
                         player.weaponSkill(player, enemy);
                         break;
                     case 4:
-                        player.classSkill();
+                        player.classSkill(player, enemy);
                         break;
                     case 5:
                         player.escape(player);

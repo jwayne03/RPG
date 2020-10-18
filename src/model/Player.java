@@ -47,6 +47,146 @@ public class Player {
         this.isDead = false;
     }
 
+    private void init() {
+        read = new BufferedReader(new InputStreamReader(System.in));
+    }
+
+    public void attack(Player player, Player enemy) {
+        int playerDamage = generateRandomNumberAttack();
+        int enemyDamage = generateRandomNumberAttack();
+
+        playerDamage += player.getLevel();
+        enemyDamage += enemy.getLevel();
+
+        player.setStamina(player.getStamina() - enemyDamage);
+        enemy.setStamina(enemy.getStamina() - playerDamage);
+
+        checkIsPlayerDead(player, enemy);
+
+        System.out.println("----------DAMAGE----------");
+        System.out.println(player.getName() + " recieves " + enemyDamage
+                + "! Life remaining: " + player.getStamina());
+        System.out.println(enemy.getName() + " recieves " + playerDamage
+                + "! Life remaining: " + enemy.getStamina());
+    }
+
+    private void checkIsPlayerDead(Player player, Player enemy) {
+        if (player.getStamina() <= 0) {
+            player.setStamina(0);
+            player.setDead(true);
+        } else {
+            player.setLevel(player.getLevel() + 1);
+        }
+
+        if (enemy.getStamina() <= 0) {
+            enemy.setStamina(0);
+            enemy.setDead(true);
+        }
+    }
+
+    public void protect(Player player, Player enemy) {
+        System.out.println(player.getName() + " recieves 0! Remaining: " + player.getStamina());
+        System.out.println(enemy.getName() + " recieves 0! Remaining: " + enemy.getStamina());
+    }
+
+    public void weaponSkill(Player player, Player enemy) { // TODO
+        // hay que meter el daño recibido y el restante
+        System.out.println(player.getName() + " recieves ");
+        System.out.println(enemy.getName() + " recieves ");
+    }
+
+    public void classSkill(Player player, Player enemy) { // TODO
+        int playerDamage = generateRandomNumberAttack();
+
+        playerDamage += player.getLevel();
+
+        enemy.setStamina(enemy.getStamina() - playerDamage);
+
+        if (player.getMagic() <= 0) {
+            System.out.println("You don't have enough power of magic");
+            player.setMagic(0);
+            return;
+        } else {
+            player.setMagic(player.getMagic() - 2);
+        }
+
+        checkIsPlayerDead(player, enemy);
+
+        System.out.println("----------DAMAGE----------");
+        System.out.println(player.getName() + " recieves 0 "
+                + "! Life remaining: " + player.getStamina());
+        System.out.println(enemy.getName() + " recieves " + playerDamage
+                + "! Life remaining: " + enemy.getStamina());
+    }
+
+    public void escape(Player player) { // TODO
+        try {
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+            int option;
+            do {
+                Printer.printEscapeOptions(player);
+                option = Integer.parseInt(br.readLine());
+            } while (option < 1 && option > 3);
+            switch (option) {
+                case 1:
+                    Manager.newGame();
+                    break;
+                case 2:
+                    System.out.println(player.toString());
+                    break;
+                case 3:
+                    Printer.printSurrender(player);
+                    System.exit(0);
+                    break;
+                case 4:
+                    if (player.getLevel() >= 5) skill();
+                    break;
+                default:
+                    System.out.println("You need to choose a number");
+                    break;
+            }
+        } catch (IOException | NumberFormatException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void skill() {
+        try {
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+            int option;
+            do {
+                Printer.printSkills();
+                option = Integer.parseInt(br.readLine());
+            } while (option < 1 && option > 3);
+
+            switch (option) {
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                default:
+                    System.out.println("You need to choose a number");
+                    break;
+            }
+        } catch (NumberFormatException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public int generateRandomNumber() {
+        int randomNumber = random.nextInt(10) + 1;
+        return randomNumber;
+    }
+
+    public int generateRandomNumberAttack() {
+        int randomNumberAttack = random.nextInt(6) + 1;
+        return randomNumberAttack;
+    }
+
     @Override
     public String toString() {
         return "Player---> " +
@@ -106,89 +246,5 @@ public class Player {
         this.isDead = dead;
     }
 
-    private void init() {
-        read = new BufferedReader(new InputStreamReader(System.in));
-    }
 
-    public void attack(Player player, Player enemy) {
-        int playerDamage = generateRandomNumberAttack();
-        int enemyDamage = generateRandomNumberAttack();
-
-        playerDamage += player.getLevel();
-        enemyDamage += enemy.getLevel();
-
-        player.setStamina(player.getStamina() - enemyDamage);
-        enemy.setStamina(enemy.getStamina() - playerDamage);
-
-        if (player.getStamina() <= 0) {
-            player.setStamina(0);
-            player.setDead(true);
-        } else {
-            player.setLevel(player.getLevel() + 1);
-        }
-
-        if (enemy.getStamina() <= 0) {
-            enemy.setStamina(0);
-            enemy.setDead(true);
-        }
-
-        System.out.println("----------DAMAGE----------");
-        System.out.println(player.getName() + " recieves " + enemyDamage
-                + "! Life remaining: " + player.getStamina());
-        System.out.println(enemy.getName() + " recieves " + playerDamage
-                + "! Life remaining: " + enemy.getStamina());
-    }
-
-    public void protect(Player player, Player enemy) {
-        System.out.println(player.getName() + " recieves 0! Remaining: " + player.getStamina());
-        System.out.println(enemy.getName() + " recieves 0! Remaining: " + enemy.getStamina());
-    }
-
-    public void weaponSkill(Player player, Player enemy) { // TODO
-        // hay que meter el daño recibido y el restante
-        System.out.println(player.getName() + " recieves ");
-        System.out.println(enemy.getName() + " recieves ");
-    }
-
-    public void classSkill() { // TODO
-
-    }
-
-    public void escape(Player player) { // TODO
-        try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-            int option;
-            do {
-                Printer.printEscapeOptions();
-                option = Integer.parseInt(br.readLine());
-            } while (option < 1 && option > 3);
-            switch (option) {
-                case 1:
-                    Manager.newGame();
-                    break;
-                case 2:
-                    System.out.println(player.toString());
-                    break;
-                case 3:
-                    Printer.printSurrender(player);
-                    break;
-                default:
-                    System.out.println("You need to choose a number");
-                    break;
-            }
-        } catch (IOException | NumberFormatException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private int generateRandomNumber() {
-        int randomNumber = random.nextInt(10) + 1;
-        return randomNumber;
-    }
-
-    private int generateRandomNumberAttack() {
-        int randomNumberAttack = random.nextInt(6) + 1;
-        return randomNumberAttack;
-    }
 }
