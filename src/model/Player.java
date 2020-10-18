@@ -31,7 +31,7 @@ public class Player {
 
     public Player(String name, Weapon weapon) {
         this.name = name;
-        this.level = 5;
+        this.level = 1;
         this.stamina = 10;
         this.magic = 4;
         this.weapon = weapon;
@@ -210,11 +210,17 @@ public class Player {
                 case 1:
                     player = new Priest(player.getName(), player.getLevel(), player.getStamina(),
                             player.getMagic(), player.getWeapon(), player.isDead());
-                    escape(player, enemy);
+                    player.attack(player, enemy);
                     break;
                 case 2:
+                    player = new Warrior(player.getName(), player.getLevel(), player.getStamina(),
+                            player.getMagic(), player.getWeapon(), player.isDead());
+                    player.attack(player, enemy);
                     break;
                 case 3:
+                    player = new Hunter(player.getName(), player.getLevel(), player.getStamina(),
+                            player.getMagic(), player.getWeapon(), player.isDead());
+                    player.attack(player, enemy);
                     break;
                 default:
                     System.err.println("You need to choose a number");
