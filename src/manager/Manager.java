@@ -1,7 +1,6 @@
 package manager;
 
 import model.Player;
-import model.Priest;
 import model.Weapon;
 import utils.Printer;
 
@@ -42,7 +41,6 @@ public class Manager {
         System.out.println("----ENEMY----");
         System.out.println(enemy.getName() + " of level " + enemy.getLevel());
         menu();
-
     }
 
     public static void menu() {

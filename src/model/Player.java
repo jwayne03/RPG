@@ -47,12 +47,13 @@ public class Player {
         this.isDead = false;
     }
 
-
     private void init() {
         read = new BufferedReader(new InputStreamReader(System.in));
     }
 
     public void attack(Player player, Player enemy) {
+        if (whoIsDead(player, enemy)) return;
+
         int playerDamage = generateRandomNumberAttack();
         int enemyDamage = generateRandomNumberAttack();
 
@@ -67,6 +68,18 @@ public class Player {
         showDamage(player, enemy, playerDamage, enemyDamage);
     }
 
+    private boolean whoIsDead(Player player, Player enemy) {
+        if (player.isDead) {
+            System.out.println(player.getName() + " is dead");
+            return true;
+        }
+        if (enemy.isDead) {
+            System.out.println(enemy.getName() + " is dead");
+            return true;
+        }
+        return false;
+    }
+
     public void showDamage(Player player, Player enemy, int playerDamage, int enemyDamage) {
         System.out.println("----------DAMAGE----------");
         System.out.println(player.getName() + " recieves " + enemyDamage
@@ -75,13 +88,14 @@ public class Player {
                 + "! Life remaining: " + enemy.getStamina());
     }
 
-    private void checkIsPlayerDead(Player player, Player enemy) {
+    public void checkIsPlayerDead(Player player, Player enemy) {
         if (player.getStamina() <= 0) {
             player.setStamina(0);
             player.setDead(true);
-        } else {
-            levelUp(player);
         }
+//        else {
+//            levelUp(player);
+//        }
 
         if (enemy.getStamina() <= 0) {
             enemy.setStamina(0);
@@ -95,12 +109,22 @@ public class Player {
         player.setMagic(player.getLevel() * 4);
     }
 
+    public void reset(Player player, Player enemy) {
+        checkIsPlayerDead(player, enemy);
+        player.setStamina(player.getLevel() * 10);
+        player.setMagic(player.getLevel() * 4);
+        player.setDead(true);
+    }
+
     public void protect(Player player, Player enemy) {
+        if (whoIsDead(player, enemy)) return;
         System.out.println(player.getName() + " recieves 0! Remaining: " + player.getStamina());
         System.out.println(enemy.getName() + " recieves 0! Remaining: " + enemy.getStamina());
     }
 
     public void weaponSkill(Player player, Player enemy) {
+        if (whoIsDead(player, enemy)) return;
+
         if (player.getMagic() <= 0) {
             Printer.printWeaponDamage(false);
             int playerDamage = generateRandomNumberAttack();
@@ -133,6 +157,8 @@ public class Player {
     }
 
     public void classSkill(Player player, Player enemy) {
+        if (whoIsDead(player, enemy)) return;
+
         int playerDamage = 0;
         int damage = 0;
 
