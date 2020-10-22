@@ -11,7 +11,6 @@ public class Priest extends Player {
         super(name, level, stamina, magic, weapon, dead);
     }
 
-    //TODO: hacer que la magia se reste -1
     @Override
     public void attack(Player player, Player enemy) {
         int damage = generateRandomNumberAttack() + player.getLevel();
@@ -23,11 +22,6 @@ public class Priest extends Player {
         System.out.println(enemy.getName() + " recieves " + damage
                 + "! Life remaining: " + enemy.getStamina());
         System.out.println(player.getMagic());
-    }
-
-    @Override
-    public void setMagic(int magic) {
-        super.setMagic(magic - 1);
     }
 
     @Override

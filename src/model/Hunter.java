@@ -23,7 +23,7 @@ public class Hunter extends Player {
                 + "! Life remaining: " + player.getStamina());
         System.out.println(enemy.getName() + " recieves " + playerDamage
                 + "! Life remaining: " + enemy.getStamina());
-//        reset(player, enemy);
+        reset(player, enemy);
     }
 
     @Override
@@ -31,11 +31,11 @@ public class Hunter extends Player {
         return random.nextInt(6) + 1;
     }
 
-//    @Override
-//    public void reset(Player player, Player enemy) {
-//        checkIsPlayerDead(player, enemy);
-//        player.setStamina((player.getLevel() * 10) + 10);
-//        player.setMagic(player.getLevel() * 4);
-//        player.setDead(true);
-//    }
+    @Override
+    public void reset(Player player, Player enemy) {
+        checkIsPlayerDead(player, enemy);
+        player.setStamina((player.getLevel() * 10) + 10);
+        player.setMagic(player.getLevel() * 4);
+        player.setDead(true);
+    }
 }

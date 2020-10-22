@@ -10,17 +10,24 @@ import java.io.InputStreamReader;
 
 public class Manager {
 
-    private static Player player;
-    private static Player enemy;
-    private static BufferedReader read;
+    private Player player;
+    private Player enemy;
+    private BufferedReader read;
+    private static Manager manager;
+    private Printer printer;
 
-    public void init() {
+    private Manager() {
         read = new BufferedReader(new InputStreamReader(System.in));
+        printer = new Printer();
+    }
+
+    public static Manager getInstance() {
+        if (manager == null) manager = new Manager();
+        return manager;
     }
 
     public void run() {
         try {
-            init();
             System.out.print("Player's name: ");
             String name = read.readLine();
             System.out.print("Name of your weapon:");
@@ -34,7 +41,7 @@ public class Manager {
         }
     }
 
-    public static void newGame() {
+    public void newGame() {
         enemy = new Player();
         System.out.println("----PLAYER----");
         System.out.println(player.getName() + " of level " + player.getLevel());
@@ -43,11 +50,11 @@ public class Manager {
         menu();
     }
 
-    public static void menu() {
+    public void menu() {
         try {
             boolean exit = false;
             while (!exit) {
-                Printer.printMenu();
+                printer.printMenu();
 
                 int option;
                 do {

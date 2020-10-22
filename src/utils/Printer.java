@@ -4,9 +4,9 @@ import model.Player;
 
 public class Printer {
 
-    private static int count = 0;
+    private int count = 0;
 
-    public static void printMenu() {
+    public void printMenu() {
         System.out.println("------------------");
         System.out.println("-------MENU-------");
         System.out.println("1) Attack");
@@ -17,7 +17,7 @@ public class Printer {
         System.out.println("------------------");
     }
 
-    public static void printEscapeOptions(Player player) {
+    public void printEscapeOptions(Player player) {
         count++;
         System.out.println("------ESCAPED " + count + "-----");
         System.out.println("1) New Enemy");
@@ -27,11 +27,11 @@ public class Printer {
 
         if (count >= 6) {
             System.out.println("You have escaped more than 5 times, thank you for the participation!");
-            System.exit(0);
+            player.exit();
         }
     }
 
-    public static void printSurrender(Player player) {
+    public void printSurrender(Player player) {
         System.out.println("Thank you for participating!");
         System.out.println("----------------------------");
         System.out.println("-----------PLAYER-----------");
@@ -40,13 +40,13 @@ public class Printer {
         System.out.println("----------------------------\n");
     }
 
-    public static void printSkills() {
+    public void printSkills() {
         System.out.println("1) Priest");
         System.out.println("2) Warrior");
         System.out.println("3) Hunter");
     }
 
-    public static void printWeaponDamage(boolean isActivated) {
+    public void printWeaponDamage(boolean isActivated) {
         if (isActivated) {
             System.out.println("----WEAPON ACTIVATED----");
             System.out.println("------------------------");
@@ -56,6 +56,4 @@ public class Printer {
             System.out.println("-----WEAPON FAILED------");
         }
     }
-
-
 }

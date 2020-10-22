@@ -1,6 +1,5 @@
 package model;
 
-import manager.Manager;
 import utils.Printer;
 
 import java.io.BufferedReader;
@@ -19,6 +18,7 @@ public class Player {
 
     private Random random = new Random();
     private BufferedReader read;
+    private Printer printer;
 
     public Player(String name, int level, int stamina, int magic, Weapon weapon, boolean dead) {
         this.name = name;
@@ -49,6 +49,7 @@ public class Player {
 
     private void init() {
         read = new BufferedReader(new InputStreamReader(System.in));
+        printer = new Printer();
     }
 
     public void attack(Player player, Player enemy) {
@@ -92,10 +93,10 @@ public class Player {
         if (player.getStamina() <= 0) {
             player.setStamina(0);
             player.setDead(true);
+        } else {
+            levelUp(player);
+            reset(player, enemy);
         }
-//        else {
-//            levelUp(player);
-//        }
 
         if (enemy.getStamina() <= 0) {
             enemy.setStamina(0);
@@ -110,7 +111,6 @@ public class Player {
     }
 
     public void reset(Player player, Player enemy) {
-        checkIsPlayerDead(player, enemy);
         player.setStamina(player.getLevel() * 10);
         player.setMagic(player.getLevel() * 4);
         player.setDead(true);
@@ -126,7 +126,7 @@ public class Player {
         if (whoIsDead(player, enemy)) return;
 
         if (player.getMagic() <= 0) {
-            Printer.printWeaponDamage(false);
+            printer.printWeaponDamage(false);
             int playerDamage = generateRandomNumberAttack();
             int enemyDamage = generateRandomNumberAttack();
 
@@ -140,7 +140,7 @@ public class Player {
 
             showDamage(player, enemy, playerDamage, enemyDamage);
         } else {
-            Printer.printWeaponDamage(true);
+            printer.printWeaponDamage(true);
             int playerDamage = weapon.weaponAbility();
             int enemyDamage = generateRandomNumberAttack();
 
@@ -196,26 +196,30 @@ public class Player {
 
             int option;
             do {
-                Printer.printEscapeOptions(player);
+                printer.printEscapeOptions(player);
                 option = Integer.parseInt(br.readLine());
             } while (option < 1 && option > 3);
-            switch (option) {
-                case 1:
-                    Manager.newGame();
-                    break;
-                case 2:
-                    System.out.println(player.toString());
-                    break;
-                case 3:
-                    Printer.printSurrender(player);
-                    System.exit(0);
-                    break;
-                case 4:
-                    if (player.getLevel() >= 5) skill(player, enemy);
-                    break;
-                default:
-                    System.out.println("You need to choose a number");
-                    break;
+
+            boolean exit = false;
+            while (!exit) {
+                switch (option) {
+                    case 1:
+                        enemy = new Player();
+                        break;
+                    case 2:
+                        System.out.println(player.toString());
+                        break;
+                    case 3:
+                        printer.printSurrender(player);
+                        exit();
+                        break;
+                    case 4:
+                        if (player.getLevel() >= 5) skill(player, enemy);
+                        break;
+                    default:
+                        System.out.println("You need to choose a number");
+                        break;
+                }
             }
         } catch (IOException | NumberFormatException e) {
             e.printStackTrace();
@@ -228,7 +232,7 @@ public class Player {
 
             int option;
             do {
-                Printer.printSkills();
+                printer.printSkills();
                 option = Integer.parseInt(br.readLine());
             } while (option < 1 && option > 3);
 
@@ -237,6 +241,7 @@ public class Player {
                     player = new Priest(player.getName(), player.getLevel(), player.getStamina(),
                             player.getMagic(), player.getWeapon(), player.isDead());
                     player.attack(player, enemy);
+                    player.setMagic(player.getLevel() - 1);
                     break;
                 case 2:
                     player = new Warrior(player.getName(), player.getLevel(), player.getStamina(),
@@ -326,5 +331,8 @@ public class Player {
         this.isDead = dead;
     }
 
+    public void exit() {
+        System.exit(0);
+    }
 
 }
